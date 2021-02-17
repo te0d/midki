@@ -1,0 +1,7 @@
+https://github.com/KyleBing/rime-wubi86-jidian
+APACHE
+wubi input stroke
+
+https://github.com/glxxyz/hskhsk.com
+MIT
+hsk characters and their relative frequencies of appearance
