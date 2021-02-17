@@ -40,10 +40,12 @@ for hsk_file in hsk_freq_files:
             word["overall_freq"] = int(rel_freq)
 
             # find the wubi strokes for each character
-            word["wubi"] = []
+            wubi = []
             for char in word["simplified"]:
                 keys = re.search(r"^{}\t([a-z]+)$".format(char), wubi_dictionary, re.MULTILINE).group(1)
-                word["wubi"].append(keys)
+                wubi.append(keys)
+
+            word["wubi"] = " ".join(wubi)
 
             word_list.append(word)
 

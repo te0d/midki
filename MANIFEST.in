@@ -1,0 +1,5 @@
+include middle_kingdom/schema.sql
+include middle_kingdom/words.json
+graft middle_kingdom/static
+graft middle_kingdom/templates
+global-exclude *.pyc
