@@ -4,7 +4,8 @@ DROP TABLE IF EXISTS words;
 CREATE TABLE users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL
+    password TEXT NOT NULL,
+    email TEXT
 );
 
 CREATE TABLE words (
