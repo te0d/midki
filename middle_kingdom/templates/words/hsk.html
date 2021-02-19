@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <h1>{% block title %}HSK {{ level }}{% endblock %}</h1>
+{% endblock header %}
+
+{% block content %}
+    {% for word in words %}
+        <p>{{ word }}</p>
+    {% endfor %}
+{% endblock content %}

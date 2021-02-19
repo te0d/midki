@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <h1>{% block title %}The Words{% endblock %}</h1>
+{% endblock header %}
+
+{% block content %}
+    {% for level in hsk_levels %}
+        <p><a href="/hsk{{ level }}">HSK {{ level }}</a></p>
+    {% endfor %}
+{% endblock content %}
