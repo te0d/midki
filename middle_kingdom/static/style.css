@@ -1,5 +1,15 @@
+@font-face {
+    font-family: 'Noto Sans SC';
+    src: local('Noto Sans SC'), url('/static/fonts/NotoSansSC-Regular.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'Noto Serif SC';
+    src: local('Noto Serif SC'), url('/static/fonts/NotoSerifSC-Regular.otf') format('opentype');
+}
+
 html {
-    font-family: sans-serif;
+    font-family: 'Noto Sans SC', sans-serif;
     background: #eee;
     padding: 1rem;
 }
@@ -11,7 +21,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: serif;
+    font-family: 'Noto Serif SC', serif;
     color: #377ba8;
     margin: 1rem 0;
 }
