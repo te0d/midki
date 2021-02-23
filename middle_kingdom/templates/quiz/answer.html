@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <h1>{% block title %}Quiz{% endblock %}</h1>
+{% endblock header %}
+
+{% block content %}
+    <p>Simplified:<br>{{ word_info["simplified"] }}</p>
+    <p>Traditional:<br>{{ word_info["traditional"] }}</p>
+    <p>Pinyin:<br>{{ word_info["pinyin_accent"] }}</p>
+    <p>Meaning:<br>{{ word_info["meaning"] }}</p>
+    <p>Wubi:<br>{{ word_info["wubi"] }}</p>
+    <form action="{{ url_for("quiz.index") }}" method="get">
+        <input type="submit" value="Next Word" autofocus="true">
+    </form>
+{% endblock content %}
