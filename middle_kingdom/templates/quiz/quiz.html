@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <h1>{% block title %}Quiz{% endblock %}</h1>
+{% endblock header %}
+
+{% block content %}
+    <p>{{ word }}</p>
+    <form method="post">
+        <label for="answer">Answer</label>
+        <input name="answer" id="answer" autocomplete="off" autofocus="autofocus">
+        <input type="submit" value="Check Answer">
+    </form>
+{% endblock content %}

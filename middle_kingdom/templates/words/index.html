@@ -5,7 +5,8 @@
 {% endblock header %}
 
 {% block content %}
+    <p><a href="{{ url_for('quiz.index') }}">Quiz Everything</a></p>
     {% for level in hsk_levels %}
-        <p><a href="/hsk{{ level }}">HSK {{ level }}</a></p>
+    <p><a href="{{ url_for('words.hsk', level=level) }}">HSK {{ level }}</a> || <a href="{{ url_for('quiz.hsk', level=level) }}">Quiz</a></p>
     {% endfor %}
 {% endblock content %}

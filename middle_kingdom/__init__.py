@@ -39,4 +39,7 @@ def create_app(test_config=None):
     app.register_blueprint(words.bp)
     app.add_url_rule("/", endpoint="index")
 
+    from . import quiz
+    app.register_blueprint(quiz.bp)
+
     return app
