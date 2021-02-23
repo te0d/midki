@@ -20,7 +20,7 @@ def index(level=None):
             "SELECT * FROM words WHERE id = ?",
             (session["word"]["id"],)
         ).fetchone()
-        return render_template("quiz/answer.html", word_info=dict(word_info))
+        return render_template("quiz/answer.html", level=level, word_info=dict(word_info))
 
     if level:
         word = db.execute(
