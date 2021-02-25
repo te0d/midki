@@ -38,6 +38,13 @@ def register():
                 "INSERT INTO users (username, password, email) VALUES (?, ?, ?)",
                 (username, generate_password_hash(password), email)
             )
+
+            # populate starting words
+            for hsk_level in range(1, 7):
+                db.execute(
+                    "INSERT INTO seen (user_id, word_id) SELECT users.id, words.id FROM users, words WHERE users.username = ? AND words.hsk_level = ? ORDER BY overall_freq limit 5",
+                    (username, hsk_level)
+                )
             db.commit()
             return redirect(url_for("auth.login"))
 

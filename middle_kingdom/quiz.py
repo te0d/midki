@@ -23,14 +23,26 @@ def index(level=None):
         return render_template("quiz/answer.html", level=level, word_info=dict(word_info))
 
     if level:
-        word = db.execute(
-            "SELECT id, simplified FROM words WHERE hsk_level = ? ORDER BY RANDOM() LIMIT 1",
-            (level,)
-        ).fetchone()
+        if g.user:
+            word = db.execute(
+                "SELECT id, simplified FROM words WHERE id IN (SELECT word_id FROM seen WHERE user_id = ?) AND hsk_level = ? ORDER BY RANDOM() LIMIT 1;",
+                (g.user["id"], level)
+            ).fetchone()
+        else:
+            word = db.execute(
+                "SELECT id, simplified FROM words WHERE hsk_level = ? ORDER BY RANDOM() LIMIT 1",
+                (level,)
+            ).fetchone()
     else:
-        word = db.execute(
-            "SELECT id, simplified FROM words ORDER BY RANDOM() LIMIT 1"
-        ).fetchone()
+        if g.user:
+            word = db.execute(
+                "SELECT id, simplified FROM words WHERE id IN (SELECT word_id FROM seen WHERE user_id = ?) ORDER BY RANDOM() LIMIT 1;",
+                (g.user["id"],)
+            ).fetchone()
+        else:
+            word = db.execute(
+                "SELECT id, simplified FROM words ORDER BY RANDOM() LIMIT 1"
+            ).fetchone()
 
     session["word"] = dict(word)
     return render_template("quiz/quiz.html", word=word)

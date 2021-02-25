@@ -30,7 +30,7 @@ def init_db():
         db.executescript(f.read().decode("utf8"))
 
     # add word data
-    with current_app.open_resource("words.json") as f:
+    with current_app.open_resource("data/words.json") as f:
         words = json.load(f)
         for word in words:
             columns = ", ".join(word.keys())

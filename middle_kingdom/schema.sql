@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS words;
+DROP TABLE IF EXISTS seen;
 
 CREATE TABLE users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -19,3 +20,11 @@ CREATE TABLE words (
     overall_freq INT NOT NULL,
     wubi TEXT NOT NULL
 );
+
+CREATE TABLE seen (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    word_id INTEGER NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES users(id),
+    FOREIGN KEY(word_id) REFERENCES words(id)
+)
