@@ -77,4 +77,4 @@ def index(level=None):
             ).fetchone()
 
     session["word"] = dict(word)
-    return render_template("quiz/quiz.html", word=word)
+    return render_template("quiz/quiz.html", level=level, word=word)

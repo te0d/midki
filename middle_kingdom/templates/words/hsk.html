@@ -2,10 +2,34 @@
 
 {% block header %}
     <h1>{% block title %}HSK {{ level }}{% endblock %}</h1>
+    <p><a href="{{ url_for('quiz.index', level=level) }}">Take Quiz<a></p>
 {% endblock header %}
 
 {% block content %}
-    {% for word in words %}
-        <p>{{ word }}</p>
-    {% endfor %}
+    <p>{{words|length}} words</p>
+
+    <table>
+        <tr>
+            <th>Simplified</th>
+            <th>Traditional</th>
+            <th>Pinyin</th>
+            <th>Meaning</th>
+            {% if g.user %}
+            <th>+</th>
+            <th>-</th>
+            {% endif %}
+        </tr>
+        {% for word in words %}
+        <tr>
+            <td>{{ word["simplified"] }}</td>
+            <td>{{ word["traditional"] }}</td>
+            <td>{{ word["pinyin_accent"] }}</td>
+            <td>{{ word["meaning"] }}</td>
+            {% if g.user %}
+            <td>{{ word["win"] }}</td>
+            <td>{{ word["loss"] }}</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
 {% endblock content %}
