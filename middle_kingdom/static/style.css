@@ -86,6 +86,16 @@ nav ul li a, nav ul li span, header .action {
     border: 1px solid #377ba8;
 }
 
+.correct {
+    background: #ccf6ca;
+    border-color: #46a837;
+}
+
+.wrong {
+    background: #f6f0ca;
+    border-color: #a8a737;
+}
+
 .post > header {
     display: flex;
     align-items: flex-end;

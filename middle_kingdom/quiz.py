@@ -55,7 +55,7 @@ def index(level=None):
                         db.commit()
 
         is_correct_text = "Correct!" if is_correct else "Wrong!"
-        flash(is_correct_text)
+        flash(is_correct_text, "correct" if is_correct else "wrong")
 
         word_info = db.execute(
             "SELECT * FROM words WHERE id = ?",
