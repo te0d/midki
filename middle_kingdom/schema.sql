@@ -26,6 +26,7 @@ CREATE TABLE seen (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     word_id INTEGER NOT NULL,
+    quiz_type TEXT NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id),
     FOREIGN KEY(word_id) REFERENCES words(id)
 );
@@ -34,6 +35,7 @@ CREATE TABLE results (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     word_id INTEGER NOT NULL,
+    quiz_type TEXT NOT NULL,
     is_correct INTEGER NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id),
     FOREIGN KEY(word_id) REFERENCES words(id)

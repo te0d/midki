@@ -42,7 +42,11 @@ def register():
             # populate starting words
             for hsk_level in range(1, 7):
                 db.execute(
-                    "INSERT INTO seen (user_id, word_id) SELECT users.id, words.id FROM users, words WHERE users.username = ? AND words.hsk_level = ? ORDER BY overall_freq limit 5",
+                    "INSERT INTO seen (user_id, word_id, quiz_type) SELECT users.id, words.id, 'simplified' FROM users, words WHERE users.username = ? AND words.hsk_level = ? ORDER BY overall_freq limit 5",
+                    (username, hsk_level)
+                )
+                db.execute(
+                    "INSERT INTO seen (user_id, word_id, quiz_type) SELECT users.id, words.id, 'traditional' FROM users, words WHERE users.username = ? AND words.hsk_level = ? ORDER BY overall_freq limit 5",
                     (username, hsk_level)
                 )
             db.commit()

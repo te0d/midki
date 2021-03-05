@@ -2,11 +2,13 @@
 
 {% block header %}
     <h1>{% block title %}Quiz{% endblock %}</h1>
-    <p><a href="{{ url_for('words.hsk', level=level) }}">List Words<a></p>
+    {% if level %}
+        <p><a href="{{ url_for('words.hsk', level=level) }}">List Words<a></p>
+    {% endif %}
 {% endblock header %}
 
 {% block content %}
-    <p>{{ word["simplified"] }}</p>
+    <p>{{ word["quiz"] }}</p>
     <form method="post">
         <label for="answer">Answer</label>
         <input name="answer" id="answer" autocomplete="off" autofocus="autofocus">

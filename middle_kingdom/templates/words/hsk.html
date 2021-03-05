@@ -10,8 +10,14 @@
 
     <table>
         <tr>
+            {% if session["quiz_type"] == "traditional" %}
+            <th>Traditional</th>
+            <th>Simplified</th>
+            {% else %}
             <th>Simplified</th>
             <th>Traditional</th>
+            {% endif %}
+
             <th>Pinyin</th>
             <th>Meaning</th>
             {% if g.user %}
@@ -21,10 +27,17 @@
         </tr>
         {% for word in words %}
         <tr>
+            {% if session["quiz_type"] == "traditional" %}
+            <td>{{ word["traditional"] }}</td>
+            <td>{{ word["simplified"] }}</td>
+            {% else %}
             <td>{{ word["simplified"] }}</td>
             <td>{{ word["traditional"] }}</td>
+            {% endif %}
+
             <td>{{ word["pinyin_accent"] }}</td>
             <td>{{ word["meaning"] }}</td>
+
             {% if g.user %}
             <td>{{ word["win"] }}</td>
             <td>{{ word["loss"] }}</td>

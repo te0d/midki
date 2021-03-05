@@ -2,12 +2,20 @@
 
 {% block header %}
     <h1>{% block title %}Quiz{% endblock %}</h1>
-    <p><a href="{{ url_for('words.hsk', level=level) }}">List Words<a></p>
+    {% if level %}
+        <p><a href="{{ url_for('words.hsk', level=level) }}">List Words<a></p>
+    {% endif %}
 {% endblock header %}
 
 {% block content %}
+    {% if session["quiz_type"] == "traditional" %}
+    <p>Traditional:<br>{{ word_info["traditional"] }}</p>
+    <p>Simplified:<br>{{ word_info["simplified"] }}</p>
+    {% else %}
     <p>Simplified:<br>{{ word_info["simplified"] }}</p>
     <p>Traditional:<br>{{ word_info["traditional"] }}</p>
+    {% endif %}
+
     <p>Pinyin:<br>{{ word_info["pinyin_accent"] }}</p>
     <p>Meaning:<br>{{ word_info["meaning"] }}</p>
     <p>Wubi:<br>{{ word_info["wubi"] }}</p>
