@@ -1,4 +1,5 @@
 import functools
+import re
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
@@ -8,6 +9,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from middle_kingdom.db import get_db
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
+username_re = re.compile(r"^[\w\d]{3,32}$")
 
 @bp.route("/register", methods=("GET", "POST"))
 def register():
@@ -22,10 +24,10 @@ def register():
             error = "Username is required"
         elif not password:
             error = "Password is required"
-        elif len(username) < 3 or len(username) > 32:
-            error = "Username must be at least 3 characters and less than 32."
+        elif not username_re.match(username):
+            error = "Username must be between 3 and 32 characters and cannot contain spaces or punctuation."
         elif len(password) < 8 or len(password) > 32:
-            error = "Password must be at least 8 characters and less than 32."
+            error = "Password must be between 8 and 32 characters."
         elif email and len(email) > 64:
             error = "Sorry, the email has too many characters."
         elif db.execute(
