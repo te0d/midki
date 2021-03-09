@@ -7,18 +7,19 @@ CREATE TABLE users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
-    email TEXT
+    email TEXT,
+    creation_time TIMESTAMP NOT NULL
 );
 
 CREATE TABLE words (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     simplified TEXT NOT NULL,
     traditional TEXT NOT NULL,
-    hsk_level INT NOT NULL,
+    hsk_level INTEGER NOT NULL,
     pinyin_number TEXT NOT NULL,
     pinyin_accent TEXT NOT NULL,
     meaning TEXT NOT NULL,
-    overall_freq INT NOT NULL,
+    overall_freq INTEGER NOT NULL,
     wubi TEXT NOT NULL
 );
 
@@ -26,6 +27,7 @@ CREATE TABLE seen (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     word_id INTEGER NOT NULL,
+    appearance_time TIMESTAMP NOT NULL,
     quiz_type TEXT NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id),
     FOREIGN KEY(word_id) REFERENCES words(id)
@@ -33,10 +35,9 @@ CREATE TABLE seen (
 
 CREATE TABLE results (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    word_id INTEGER NOT NULL,
-    quiz_type TEXT NOT NULL,
+    seen_id INTEGER NOT NULL,
     is_correct INTEGER NOT NULL,
-    FOREIGN KEY(user_id) REFERENCES users(id),
-    FOREIGN KEY(word_id) REFERENCES words(id)
+    question_time TIMESTAMP NOT NULL,
+    answer_time TIMESTAMP NOT NULL,
+    FOREIGN KEY(seen_id) REFERENCES seen(id)
 );
