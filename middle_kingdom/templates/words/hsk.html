@@ -1,8 +1,26 @@
 {% extends "base.html" %}
 
 {% block header %}
-    <h1>{% block title %}HSK {{ level }}{% endblock %}</h1>
-    <p><a href="{{ url_for('quiz.index', level=level) }}">Take Quiz<a></p>
+    <h1>
+        {% block title %}
+        HSK {{ level }}
+        {% if question_type %}
+        [{{ question_type }}]
+        {% endif %}
+        {% endblock %}
+    </h1>
+
+    {% if question_type == 'word' %}
+    <p><a href="{{ url_for('words.hsk', question_type='meaning', level=level) }}">List Meaning Stats</a></p>
+    <p>||</p>
+    {% elif question_type == 'meaning' %}
+    <p><a href="{{ url_for('words.hsk', question_type='word', level=level) }}">List Word Stats</a></p>
+    <p>||</p>
+    {% endif %}
+
+    <p><a href="{{ url_for('quiz.index', question_type='word', level=level) }}">Quiz Words</a></p>
+    <p>||</p>
+    <p><a href="{{ url_for('quiz.index', question_type='meaning', level=level) }}">Quiz Meanings</a></p>
 {% endblock header %}
 
 {% block content %}
@@ -10,7 +28,7 @@
 
     <table>
         <tr>
-            {% if session["quiz_type"] == "traditional" %}
+            {% if session["answer_type"] == "traditional" %}
             <th>Traditional</th>
             <th>Simplified</th>
             {% else %}
@@ -27,7 +45,7 @@
         </tr>
         {% for word in words %}
         <tr>
-            {% if session["quiz_type"] == "traditional" %}
+            {% if session["answer_type"] == "traditional" %}
             <td>{{ word["traditional"] }}</td>
             <td>{{ word["simplified"] }}</td>
             {% else %}

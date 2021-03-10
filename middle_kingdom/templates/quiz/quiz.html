@@ -1,9 +1,18 @@
 {% extends "base.html" %}
 
 {% block header %}
-    <h1>{% block title %}Quiz{% endblock %}</h1>
+    <h1>
+        {% block title %}
+        Quiz
+        [{{ question_type }}]
+        {% endblock %}
+    </h1>
     {% if level %}
+        {% if g.user %}
+        <p><a href="{{ url_for('words.hsk', level=level, question_type=question_type) }}">List Words<a></p>
+        {% else %}
         <p><a href="{{ url_for('words.hsk', level=level) }}">List Words<a></p>
+        {% endif %}
     {% endif %}
 {% endblock header %}
 

@@ -1,14 +1,20 @@
 {% extends "base.html" %}
 
 {% block header %}
-    <h1>{% block title %}Quiz{% endblock %}</h1>
+<h1>
+    {% block title %}
+    Quiz
+    [{{ question_type }}]
+    {% endblock %}
+</h1>
+
     {% if level %}
-        <p><a href="{{ url_for('words.hsk', level=level) }}">List Words<a></p>
+        <p><a href="{{ url_for('words.hsk', level=level, question_type=question_type) }}">List Words<a></p>
     {% endif %}
 {% endblock header %}
 
 {% block content %}
-    {% if session["quiz_type"] == "traditional" %}
+    {% if session["answer_type"] == "traditional" %}
     <p>Traditional:<br>{{ word_info["traditional"] }}</p>
     <p>Simplified:<br>{{ word_info["simplified"] }}</p>
     {% else %}
@@ -19,7 +25,7 @@
     <p>Pinyin:<br>{{ word_info["pinyin_accent"] }}</p>
     <p>Meaning:<br>{{ word_info["meaning"] }}</p>
     <p>Wubi:<br>{{ word_info["wubi"] }}</p>
-    <form action="{{ url_for("quiz.index", level=level) }}" method="get">
+    <form action="{{ url_for("quiz.index", question_type=question_type, level=level) }}" method="get">
         <input type="submit" value="Next Word" autofocus="true">
     </form>
 {% endblock content %}

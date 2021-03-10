@@ -28,7 +28,8 @@ CREATE TABLE seen (
     user_id INTEGER NOT NULL,
     word_id INTEGER NOT NULL,
     appearance_time TIMESTAMP NOT NULL,
-    quiz_type TEXT NOT NULL,
+    question_type TEXT NOT NULL,
+    answer_type TEXT NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id),
     FOREIGN KEY(word_id) REFERENCES words(id)
 );

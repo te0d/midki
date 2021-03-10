@@ -6,10 +6,23 @@
 
 {% block content %}
     {% if not g.user %}
-    <p><a href="{{ url_for('quiz.index') }}">Quiz Everything</a></p>
+    <p>
+        <a href="{{ url_for('quiz.index', question_type='word') }}">Quiz All Words</a>
+        <a href="{{ url_for('quiz.index', question_type='meaning') }}">Quiz All Meanings</a>
+    </p>
     {% endif %}
 
     {% for level in hsk_levels %}
-    <p><a href="{{ url_for('words.hsk', level=level) }}">HSK {{ level }}</a> || <a href="{{ url_for('quiz.index', level=level) }}">Quiz</a></p>
+    <h3>HSK {{ level }}</h3>
+    <p>
+        <a href="{{ url_for('quiz.index', question_type='word', level=level) }}">Quiz Words</a> |
+        <a href="{{ url_for('quiz.index', question_type='meaning', level=level) }}">Quiz Meanings</a> |
+        {% if g.user %}
+        <a href="{{ url_for('words.hsk', level=level, question_type='word') }}">List Word Stats</a> |
+        <a href="{{ url_for('words.hsk', level=level, question_type='meaning') }}">List Meaning Stats</a>
+        {% else %}
+        <a href="{{ url_for('words.hsk', level=level) }}">List Words</a>
+        {% endif %}
+    </p>
     {% endfor %}
 {% endblock content %}

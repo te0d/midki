@@ -8,7 +8,7 @@
         <nav>
             <h1><a href="{{ url_for('index') }}">Middle Kingdom</a></h1>
             <ul>
-                {% if session["quiz_type"] == "traditional" %}
+                {% if session["answer_type"] == "traditional" %}
                     <li><a href="{{ url_for('words.simplified') }}">Switch to Simplified Characters</a></li>
                 {% else %}
                     <li><a href="{{ url_for('words.traditional') }}">Switch to Traditional Characters</a></li>

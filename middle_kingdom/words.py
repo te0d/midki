@@ -17,18 +17,20 @@ def index():
     return render_template("words/index.html", hsk_levels=[l["hsk_level"] for l in hsk_levels])
 
 @bp.route("/hsk<int:level>")
-def hsk(level):
+@bp.route("/hsk<int:level>/<question_type>")
+def hsk(level, question_type=None):
     db = get_db()
+    question_type = "meaning" if question_type == "meaning" else "word"
 
     try:
-        quiz_type = "traditional" if session["quiz_type"] == "traditional" else "simplified"
+        answer_type = "traditional" if session["answer_type"] == "traditional" else "simplified"
     except KeyError:
-        quiz_type = "simplified"
+        answer_type = "simplified"
 
     if g.user:
         words = db.execute(
-            "SELECT seenwords.word_id, seenwords.simplified, seenwords.traditional, seenwords.pinyin_accent, seenwords.meaning, SUM(CASE WHEN results.is_correct = 1 THEN 1 ELSE 0 END) as win, SUM(CASE WHEN results.is_correct = 0 THEN 1 ELSE 0 END) as loss FROM (SELECT seen.id as seen_id, seen.word_id, words.simplified, words.traditional, words.pinyin_accent, words.meaning FROM seen JOIN words ON seen.word_id = words.id WHERE seen.user_id = ? AND seen.quiz_type = ? AND words.hsk_level = ?) as seenwords LEFT JOIN results ON seenwords.seen_id = results.seen_id GROUP BY seenwords.word_id;",
-            (g.user["id"], quiz_type, level)
+            "SELECT seenwords.word_id, seenwords.simplified, seenwords.traditional, seenwords.pinyin_accent, seenwords.meaning, SUM(CASE WHEN results.is_correct = 1 THEN 1 ELSE 0 END) as win, SUM(CASE WHEN results.is_correct = 0 THEN 1 ELSE 0 END) as loss FROM (SELECT seen.id as seen_id, seen.word_id, seen.question_type, words.simplified, words.traditional, words.pinyin_accent, words.meaning FROM seen JOIN words ON seen.word_id = words.id WHERE seen.user_id = ? AND seen.question_type = ? AND seen.answer_type = ? AND words.hsk_level = ?) as seenwords LEFT JOIN results ON seenwords.seen_id = results.seen_id GROUP BY seenwords.word_id;",
+            (g.user["id"], question_type, answer_type, level)
         ).fetchall()
     else:
         words = db.execute(
@@ -36,14 +38,14 @@ def hsk(level):
             (level,)
         ).fetchall()
 
-    return render_template("words/hsk.html", level=level, words=words)
+    return render_template("words/hsk.html", level=level, question_type=question_type, words=words)
 
 @bp.route("/simplified")
 def simplified():
-    session["quiz_type"] = "simplified"
+    session["answer_type"] = "simplified"
     return redirect(url_for("index"))
 
 @bp.route("/traditional")
 def traditional():
-    session["quiz_type"] = "traditional"
+    session["answer_type"] = "traditional"
     return redirect(url_for("index"))

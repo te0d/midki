@@ -46,11 +46,19 @@ def register():
             # populate starting words
             for hsk_level in range(1, 7):
                 db.execute(
-                    "INSERT INTO seen (user_id, word_id, appearance_time, quiz_type) SELECT users.id, words.id, ?, 'simplified' FROM users, words WHERE users.username = ? AND words.hsk_level = ? ORDER BY overall_freq limit 5",
+                    "INSERT INTO seen (user_id, word_id, appearance_time, question_type, answer_type) SELECT users.id, words.id, ?, 'word', 'simplified' FROM users, words WHERE users.username = ? AND words.hsk_level = ? ORDER BY overall_freq limit 5",
                     (now, username, hsk_level)
                 )
                 db.execute(
-                    "INSERT INTO seen (user_id, word_id, appearance_time, quiz_type) SELECT users.id, words.id, ?, 'traditional' FROM users, words WHERE users.username = ? AND words.hsk_level = ? ORDER BY overall_freq limit 5",
+                    "INSERT INTO seen (user_id, word_id, appearance_time, question_type, answer_type) SELECT users.id, words.id, ?, 'word', 'traditional' FROM users, words WHERE users.username = ? AND words.hsk_level = ? ORDER BY overall_freq limit 5",
+                    (now, username, hsk_level)
+                )
+                db.execute(
+                    "INSERT INTO seen (user_id, word_id, appearance_time, question_type, answer_type) SELECT users.id, words.id, ?, 'meaning', 'simplified' FROM users, words WHERE users.username = ? AND words.hsk_level = ? ORDER BY overall_freq limit 5",
+                    (now, username, hsk_level)
+                )
+                db.execute(
+                    "INSERT INTO seen (user_id, word_id, appearance_time, question_type, answer_type) SELECT users.id, words.id, ?, 'meaning', 'traditional' FROM users, words WHERE users.username = ? AND words.hsk_level = ? ORDER BY overall_freq limit 5",
                     (now, username, hsk_level)
                 )
             db.commit()
