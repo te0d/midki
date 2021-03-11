@@ -1,4 +1,5 @@
 import datetime
+import random
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
@@ -40,10 +41,15 @@ def index(question_type, level=None):
         session["word"] = None
 
         if g.user:
-            # Record result
+            # Record result and update weighting
+            weight_change = -10 if is_correct else 10
             db.execute(
                 "INSERT INTO results (seen_id, is_correct, question_time, answer_time) SELECT id, ?, ?, ? FROM seen WHERE user_id = ? AND word_id = ? AND question_type = ? AND answer_type = ?",
                 (is_correct, question_time, now, g.user["id"], word_id, question_type, answer_type)
+            )
+            db.execute(
+                "UPDATE seen SET weight = MAX(50, MIN(150, weight+?)) WHERE user_id = ? AND word_id = ? AND question_type = ? AND answer_type = ?",
+                (weight_change, g.user["id"], word_id, question_type, answer_type)
             )
             db.commit()
 
@@ -72,10 +78,12 @@ def index(question_type, level=None):
 
     question_col = "meaning" if question_type == "meaning" else answer_type
     if g.user:
-        word = db.execute(
-            "SELECT id, {} as quiz, {} as answer FROM words WHERE id IN (SELECT word_id FROM seen WHERE user_id = ? AND question_type = ? AND answer_type = ?) AND hsk_level = ? ORDER BY RANDOM() LIMIT 1;".format(question_col, answer_type),
+        words = db.execute(
+            "SELECT w.id, w.{} as quiz, w.{} as answer, s.weight FROM words w, seen s ON w.id = s.word_id AND s.user_id = ? AND s.question_type = ? AND s.answer_type = ? WHERE w.hsk_level = ?".format(question_col, answer_type),
             (g.user["id"], question_type, answer_type, level)
-        ).fetchone()
+        ).fetchall()
+        word_weights = [w["weight"] for w in words]
+        word = random.choices(words, weights=word_weights)[0]
     elif level:
         word = db.execute(
             "SELECT id, {} as quiz, {} as answer FROM words WHERE hsk_level = ? ORDER BY RANDOM() LIMIT 1".format(question_col, answer_type),

@@ -30,6 +30,7 @@ CREATE TABLE seen (
     appearance_time TIMESTAMP NOT NULL,
     question_type TEXT NOT NULL,
     answer_type TEXT NOT NULL,
+    weight INTEGER NOT NULL DEFAULT 100,
     FOREIGN KEY(user_id) REFERENCES users(id),
     FOREIGN KEY(word_id) REFERENCES words(id)
 );
