@@ -7,20 +7,25 @@
         [{{ question_type }}]
         {% endblock %}
     </h1>
+
     {% if level %}
+    <nav class="nav">
         {% if g.user %}
-        <p><a href="{{ url_for('words.hsk', level=level, question_type=question_type) }}">List Words<a></p>
+        <a class="nav-link" href="{{ url_for('words.hsk', level=level, question_type=question_type) }}">List Words<a>
         {% else %}
-        <p><a href="{{ url_for('words.hsk', level=level) }}">List Words<a></p>
+        <a class="nav-link" href="{{ url_for('words.hsk', level=level) }}">List Words<a>
         {% endif %}
+    </nav>
     {% endif %}
 {% endblock header %}
 
 {% block content %}
-    <p>{{ word["quiz"] }}</p>
+    <h3 class="mb-3">{{ word["quiz"] }}</h3>
     <form method="post">
-        <label for="answer">Answer</label>
-        <input name="answer" id="answer" autocomplete="off" autofocus="autofocus">
-        <input type="submit" value="Check Answer">
+        <div class="mb-3">
+            <label for="answer" class="form-label">Please enter the word:</label>
+            <input name="answer" id="answer" class="form-control" autocomplete="off" autofocus="autofocus">
+        </div>
+        <input type="submit" value="Check Answer" class="btn btn-secondary mb-3">
     </form>
 {% endblock content %}

@@ -10,39 +10,38 @@
         {% endblock %}
     </h1>
 
-    {% if question_type == 'word' %}
-    <p><a href="{{ url_for('words.hsk', question_type='meaning', level=level) }}">List Meaning Stats</a></p>
-    <p>||</p>
-    {% elif question_type == 'meaning' %}
-    <p><a href="{{ url_for('words.hsk', question_type='word', level=level) }}">List Word Stats</a></p>
-    <p>||</p>
-    {% endif %}
+    <nav class="nav">
+        {% if question_type == 'word' %}
+        <a class="nav-link" href="{{ url_for('words.hsk', question_type='meaning', level=level) }}">List Meaning Stats</a>
+        {% elif question_type == 'meaning' %}
+        <a class="nav-link" href="{{ url_for('words.hsk', question_type='word', level=level) }}">List Word Stats</a>
+        {% endif %}
 
-    <p><a href="{{ url_for('quiz.index', question_type='word', level=level) }}">Quiz Words</a></p>
-    <p>||</p>
-    <p><a href="{{ url_for('quiz.index', question_type='meaning', level=level) }}">Quiz Meanings</a></p>
+        <a class="nav-link" href="{{ url_for('quiz.index', question_type='word', level=level) }}">Quiz Words</a>
+        <a class="nav-link" href="{{ url_for('quiz.index', question_type='meaning', level=level) }}">Quiz Meanings</a>
+    </nav>
 {% endblock header %}
 
 {% block content %}
     <p>{{words|length}} words</p>
 
-    <table>
-        <tr>
+    <table class="table table-hover">
+        <thead>
             {% if session["answer_type"] == "traditional" %}
-            <th>Traditional</th>
-            <th>Simplified</th>
+            <th scope="col">Traditional</th>
+            <th scope="col">Simplified</th>
             {% else %}
-            <th>Simplified</th>
-            <th>Traditional</th>
+            <th scope="col">Simplified</th>
+            <th scope="col">Traditional</th>
             {% endif %}
 
-            <th>Pinyin</th>
-            <th>Meaning</th>
+            <th scope="col">Pinyin</th>
+            <th scope="col">Meaning</th>
             {% if g.user %}
-            <th>+</th>
-            <th>-</th>
+            <th scope="col">+</th>
+            <th scope="col">-</th>
             {% endif %}
-        </tr>
+        </thead>
         {% for word in words %}
         <tr>
             {% if session["answer_type"] == "traditional" %}

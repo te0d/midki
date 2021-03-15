@@ -9,23 +9,49 @@
 </h1>
 
     {% if level %}
-        <p><a href="{{ url_for('words.hsk', level=level, question_type=question_type) }}">List Words<a></p>
+    <nav class="nav">
+        <a class="nav-link" href="{{ url_for('words.hsk', level=level, question_type=question_type) }}">List Words<a>
+    </nav>
     {% endif %}
 {% endblock header %}
 
 {% block content %}
+<table class="table">
     {% if session["answer_type"] == "traditional" %}
-    <p>Traditional:<br>{{ word_info["traditional"] }}</p>
-    <p>Simplified:<br>{{ word_info["simplified"] }}</p>
+    <tr>
+        <th scope="row">Traditional</th>
+        <td>{{ word_info["traditional"] }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Simplified</th>
+        <td>{{ word_info["simplified"] }}</td>
+    </tr>
     {% else %}
-    <p>Simplified:<br>{{ word_info["simplified"] }}</p>
-    <p>Traditional:<br>{{ word_info["traditional"] }}</p>
+    <tr>
+        <th scope="row">Simplified</th>
+        <td>{{ word_info["simplified"] }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Traditional</th>
+        <td>{{ word_info["traditional"] }}</td>
+    </tr>
     {% endif %}
 
-    <p>Pinyin:<br>{{ word_info["pinyin_accent"] }}</p>
-    <p>Meaning:<br>{{ word_info["meaning"] }}</p>
-    <p>Wubi:<br>{{ word_info["wubi"] }}</p>
-    <form action="{{ url_for("quiz.index", question_type=question_type, level=level) }}" method="get">
-        <input type="submit" value="Next Word" autofocus="true">
-    </form>
+    <tr>
+        <th scope="row">Pinyin</th>
+        <td>{{ word_info["pinyin_accent"] }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Meaning</th>
+        <td>{{ word_info["meaning"] }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Wubi</th>
+        <td>{{ word_info["wubi"] }}</td>
+    </tr>
+</table>
+
+<form action="{{ url_for("quiz.index", question_type=question_type, level=level) }}" method="get">
+    <input type="submit" value="Next Word" class="btn btn-primary mb-3" autofocus="true">
+</form>
 {% endblock content %}

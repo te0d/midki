@@ -1,37 +1,57 @@
 <!doctype html>
 <html>
     <head>
-        <title>{% block title %}{% endblock %} - Middle Kingdom</title>
+        <title>{% block title %}{% endblock %} - Midki</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-5.0.0-b2.min.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     </head>
     <body>
-        <nav>
-            <h1><a href="{{ url_for('index') }}">Middle Kingdom</a></h1>
-            <ul>
-                {% if session["answer_type"] == "traditional" %}
-                    <li><a href="{{ url_for('words.simplified') }}">Switch to Simplified Characters</a></li>
-                {% else %}
-                    <li><a href="{{ url_for('words.traditional') }}">Switch to Traditional Characters</a></li>
-                {% endif %}
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <div class="container-md">
+                <a class="navbar-brand" href="{{ url_for('index') }}">Midki</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                {% if g.user %}
-                    <li><span>{{ g.user["username"] }}</span></li>
-                    <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
-                {% else %}
-                    <li><a href="{{ url_for('auth.register') }}">Register</a></li>
-                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
-                {% endif %}
-            </ul>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="navbar-nav w-100">
+                        {% if session["answer_type"] == "traditional" %}
+                            <a class="nav-link me-auto" href="{{ url_for('words.simplified') }}">Switch to Simplified Characters</a>
+                        {% else %}
+                            <a class="nav-link me-auto" href="{{ url_for('words.traditional') }}">Switch to Traditional Characters</a>
+                        {% endif %}
+
+                        {% if g.user %}
+                            <span class="navbar-text">[ <em>{{ g.user["username"] }}</em> ]</span>
+                            <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+                        {% else %}
+                            <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
+                            <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </nav>
-        <section class="content">
-            <header>
+        <section class="container-md content">
+            <header class="mb-3 py-2">
                 {% block header %}{% endblock %}
             </header>
             {% for category, message in get_flashed_messages(with_categories=true) %}
-                <div class="flash {{ category }}">{{ message }}</div>
+                {% if category == "correct" %}
+                    <div class="alert alert-success">{{ message }}</div>
+                {% elif category == "wrong" %}
+                    <div class="alert alert-warning">{{ message }}</div>
+                {% else %}
+                    <div class="alert alert-primary">{{ message }}</div>
+                {% endif %}
             {% endfor %}
             {% block content %}{% endblock %}
         </section>
+
+        <script src="{{ url_for('static', filename='bootstrap-5.0.0-b2.min.js') }}"></script>
     </body>
 </html>
 

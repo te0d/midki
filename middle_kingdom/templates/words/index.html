@@ -2,16 +2,16 @@
 
 {% block header %}
     <h1>{% block title %}The Words{% endblock %}</h1>
+
+    {% if not g.user %}
+    <nav class="nav">
+        <a class="nav-link" href="{{ url_for('quiz.index', question_type='word') }}">Quiz All Words</a>
+        <a class="nav-link" href="{{ url_for('quiz.index', question_type='meaning') }}">Quiz All Meanings</a>
+    </nav>
+    {% endif %}
 {% endblock header %}
 
 {% block content %}
-    {% if not g.user %}
-    <p>
-        <a href="{{ url_for('quiz.index', question_type='word') }}">Quiz All Words</a>
-        <a href="{{ url_for('quiz.index', question_type='meaning') }}">Quiz All Meanings</a>
-    </p>
-    {% endif %}
-
     {% for level in hsk_levels %}
     <h3>HSK {{ level }}</h3>
     <p>
