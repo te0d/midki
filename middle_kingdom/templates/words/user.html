@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <h1>{% block title %}The Words{% endblock %}</h1>
+{% endblock header %}
+
+{% block content %}
+<div class="row">
+    {% for level in hsk_levels %}
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h3 class="card-title text-center">HSK {{ level['hsk_level'] }}</h3>
+
+                <div class="d-flex align-items-center mb-3">
+                    <p class="m-2 w-50">Word <small>[ {{ level['correct_word_count'] }} / {{ level['total_word_count'] }} ]</small></p>
+                    <div class="progress flex-fill me-2">
+                        <div
+                            class="progress-bar"
+                            role="progressbar"
+                            style="width: {{ level['correct_word_count'] / level['total_word_count'] * 100 }}%;"
+                            aria-valuenow="{{ level['correct_word_count'] }}"
+                            aria-valuemin="0"
+                            aria-valuemax="{{ level['total_word_count'] }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="list-group list-group-horizontal m-3">
+                    <a href="{{ url_for('quiz.index', level=level['hsk_level'], question_type='word') }}" class="list-group-item list-group-item-action list-group-item-success">Quiz Words</a>
+                    <a href="{{ url_for('words.hsk', level=level['hsk_level'], question_type='word') }}" class="list-group-item list-group-item-action">List Word Stats</a>
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <p class="m-2 w-50">Meaning <small>[ {{ level['correct_meaning_count'] }} / {{ level['total_word_count'] }} ]</small></p>
+                    <div class="progress flex-fill me-2">
+                        <div
+                            class="progress-bar"
+                            role="progressbar"
+                            style="width: {{ level['correct_meaning_count'] / level['total_word_count'] * 100 }}%;"
+                            aria-valuenow="{{ level['correct_meaning_count'] }}"
+                            aria-valuemin="0"
+                            aria-valuemax="{{ level['total_word_count'] }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="list-group list-group-horizontal m-3">
+                    <a href="{{ url_for('quiz.index', level=level['hsk_level'], question_type='meaning') }}" class="list-group-item list-group-item-action list-group-item-success">Quiz Meanings</a>
+                    <a href="{{ url_for('words.hsk', level=level['hsk_level'], question_type='meaning') }}" class="list-group-item list-group-item-action">List Meaning Stats</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

@@ -3,26 +3,28 @@
 {% block header %}
     <h1>{% block title %}The Words{% endblock %}</h1>
 
-    {% if not g.user %}
     <nav class="nav">
         <a class="nav-link" href="{{ url_for('quiz.index', question_type='word') }}">Quiz All Words</a>
         <a class="nav-link" href="{{ url_for('quiz.index', question_type='meaning') }}">Quiz All Meanings</a>
     </nav>
-    {% endif %}
 {% endblock header %}
 
 {% block content %}
+<div class="row text-center">
     {% for level in hsk_levels %}
-    <h3>HSK {{ level }}</h3>
-    <p>
-        <a href="{{ url_for('quiz.index', question_type='word', level=level) }}">Quiz Words</a> |
-        <a href="{{ url_for('quiz.index', question_type='meaning', level=level) }}">Quiz Meanings</a> |
-        {% if g.user %}
-        <a href="{{ url_for('words.hsk', level=level, question_type='word') }}">List Word Stats</a> |
-        <a href="{{ url_for('words.hsk', level=level, question_type='meaning') }}">List Meaning Stats</a>
-        {% else %}
-        <a href="{{ url_for('words.hsk', level=level) }}">List Words</a>
-        {% endif %}
-    </p>
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h3 class="card-title">HSK {{ level['hsk_level'] }}</h3>
+                <p>{{ level['total_word_count'] }} words</p>
+                <div class="list-group list-group-horizontal m-3">
+                    <a href="{{ url_for('quiz.index', question_type='word', level=level['hsk_level']) }}" class="list-group-item list-group-item-action list-group-item-success">Quiz Words</a>
+                    <a href="{{ url_for('quiz.index', question_type='meaning', level=level['hsk_level']) }}" class="list-group-item list-group-item-action list-group-item-success">Quiz Meanings</a>
+                    <a href="{{ url_for('words.hsk', level=level['hsk_level']) }}" class="list-group-item list-group-item-action">List Words</a>
+                </div>
+            </div>
+        </div>
+    </div>
     {% endfor %}
+</div>
 {% endblock content %}

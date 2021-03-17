@@ -11,10 +11,24 @@ bp = Blueprint("words", __name__)
 @bp.route("/")
 def index():
     db = get_db()
-    hsk_levels = db.execute(
-        "SELECT DISTINCT hsk_level FROM words ORDER BY hsk_level"
-    ).fetchall()
-    return render_template("words/index.html", hsk_levels=[l["hsk_level"] for l in hsk_levels])
+
+    if g.user:
+        try:
+            answer_type = "traditional" if session["answer_type"] == "traditional" else "simplified"
+        except KeyError:
+            answer_type = "simplified"
+
+        hsk_levels = db.execute(
+            "SELECT w.hsk_level, COUNT(*) as total_word_count, SUM(CASE WHEN sr.question_type = 'word' THEN 1 ELSE 0 END) as correct_word_count, SUM(CASE WHEN sr.question_type = 'meaning' THEN 1 ELSE 0 END) as correct_meaning_count  FROM words w LEFT JOIN (SELECT s.id, s.word_id, s.question_type FROM seen s JOIN results r ON s.id = r.seen_id AND s.user_id = ? AND s.answer_type = ? AND r.is_correct = 1 GROUP BY s.word_id, s.question_type) sr ON w.id = sr.word_id GROUP BY w.hsk_level",
+            (g.user["id"], answer_type)
+        ).fetchall()
+        return render_template("words/user.html", hsk_levels=[dict(row) for row in hsk_levels])
+    else:
+        hsk_levels = db.execute(
+            "SELECT hsk_level, count(*) as total_word_count FROM words GROUP BY hsk_level ORDER BY hsk_level"
+        ).fetchall()
+        return render_template("words/index.html", hsk_levels=[dict(row) for row in hsk_levels])
+
 
 @bp.route("/hsk<int:level>")
 @bp.route("/hsk<int:level>/<question_type>")
@@ -40,10 +54,12 @@ def hsk(level, question_type=None):
 
     return render_template("words/hsk.html", level=level, question_type=question_type, words=words)
 
+
 @bp.route("/simplified")
 def simplified():
     session["answer_type"] = "simplified"
     return redirect(url_for("index"))
+
 
 @bp.route("/traditional")
 def traditional():
