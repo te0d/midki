@@ -10,3 +10,7 @@ body {
 .content > header {
     border-bottom: 1px solid lightgray;
 }
+
+.quiz-word {
+    font-size: 3em;
+}

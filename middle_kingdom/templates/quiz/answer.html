@@ -16,40 +16,47 @@
 {% endblock header %}
 
 {% block content %}
-<table class="table">
-    {% if session["answer_type"] == "traditional" %}
-    <tr>
-        <th scope="row">Traditional</th>
-        <td>{{ word_info["traditional"] }}</td>
-    </tr>
-    <tr>
-        <th scope="row">Simplified</th>
-        <td>{{ word_info["simplified"] }}</td>
-    </tr>
-    {% else %}
-    <tr>
-        <th scope="row">Simplified</th>
-        <td>{{ word_info["simplified"] }}</td>
-    </tr>
-    <tr>
-        <th scope="row">Traditional</th>
-        <td>{{ word_info["traditional"] }}</td>
-    </tr>
-    {% endif %}
+<div class="row mb-3">
+    <div class="col-sm-4 mb-3">
+        <div class="p-3 border rounded-pill text-center">
+            <h1 class="quiz-word">
+                {% if session["answer_type"] == "traditional" %}
+                {{ word_info["traditional"] }}</h1>
+                {% else %}
+                {{ word_info["simplified"] }}
+                {% endif %}
+            </h1>
 
-    <tr>
-        <th scope="row">Pinyin</th>
-        <td>{{ word_info["pinyin_accent"] }}</td>
-    </tr>
-    <tr>
-        <th scope="row">Meaning</th>
-        <td>{{ word_info["meaning"] }}</td>
-    </tr>
-    <tr>
-        <th scope="row">Wubi</th>
-        <td>{{ word_info["wubi"] }}</td>
-    </tr>
-</table>
+            <p class="text-muted">{{ word_info["pinyin_accent"] }}</p>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <p class="p-2 border-start rounded bg-light">{{ word_info["meaning"] }}</p>
+
+        <table class="table">
+            <tr>
+                {% if session["answer_type"] == "traditional" %}
+                <th scope="row">Simplified</th>
+                <td>{{ word_info["simplified"] }}</td>
+                {% else %}
+                <th scope="row">Traditional</th>
+                <td>{{ word_info["traditional"] }}</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th scope="row">Wubi</th>
+                <td>{{ word_info["wubi"] }}</td>
+            </tr>
+        </table>
+    </div>
+
+    {% if recent_performance %}
+    <div class="col-sm-2 text-center">
+        <p class="d-inline d-sm-block">recently</p>
+        <h1 class="d-inline d-sm-block">{{ recent_performance }}</h1>
+    </div>
+    {% endif %}
+</div>
 
 <form action="{{ url_for("quiz.index", question_type=question_type, level=level) }}" method="get">
     <input type="submit" value="Next Word" class="btn btn-primary mb-3" autofocus="true">

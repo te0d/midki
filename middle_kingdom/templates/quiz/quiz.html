@@ -11,16 +11,21 @@
     {% if level %}
     <nav class="nav">
         {% if g.user %}
-        <a class="nav-link" href="{{ url_for('words.hsk', level=level, question_type=question_type) }}">List Words<a>
+        <a class="nav-link" href="{{ url_for('words.hsk', level=level, question_type=question_type) }}">List Words</a>
         {% else %}
-        <a class="nav-link" href="{{ url_for('words.hsk', level=level) }}">List Words<a>
+        <a class="nav-link" href="{{ url_for('words.hsk', level=level) }}">List Words</a>
         {% endif %}
     </nav>
     {% endif %}
 {% endblock header %}
 
 {% block content %}
-    <h3 class="mb-3">{{ word["quiz"] }}</h3>
+    {% if question_type == "meaning" %}
+    <h3 class="mb-3 p-3 border-start rounded bg-light">{{ word["quiz"] }}</h3>
+    {% else %}
+    <h3 class="quiz-word mb-3 p-3 text-center text-sm-start">{{ word["quiz"] }}</h3>
+    {% endif %}
+
     <form method="post">
         <div class="mb-3">
             <label for="answer" class="form-label">Please enter the word:</label>

@@ -33,6 +33,7 @@ def index(question_type, level=None):
         answer_type = "simplified"
 
 
+    # Respond to User's Answer
     if request.method == "POST":
         if "word" not in session or not session["word"]:
             return redirect(url_for("quiz.index", level=level, question_type=question_type))
@@ -41,11 +42,16 @@ def index(question_type, level=None):
         word_id = session["word"]["id"]
         question_time = session["word"]["question_time"]
         is_correct = answer == session["word"]["answer"]
+        try:
+            word_weight = session["word"]["weight"]
+        except:
+            word_weight = None
         session["word"] = None
 
         if g.user:
             # Record result and update weighting
             weight_change = -10 if is_correct else 10
+            word_weight += weight_change
             db.execute(
                 "INSERT INTO results (seen_id, is_correct, question_time, answer_time) SELECT id, ?, ?, ? FROM seen WHERE user_id = ? AND word_id = ? AND question_type = ? AND answer_type = ?",
                 (is_correct, question_time, now, g.user["id"], word_id, question_type, answer_type)
@@ -73,12 +79,26 @@ def index(question_type, level=None):
         is_correct_text = "Correct!" if is_correct else "Wrong!"
         flash(is_correct_text, "correct" if is_correct else "wrong")
 
+        if word_weight is None:
+            emoji = None
+        elif word_weight <= 50:
+            emoji = "😁"
+        elif word_weight <= 80:
+            emoji = "😃"
+        elif word_weight >= 150:
+            emoji = "😩"
+        elif word_weight > 120:
+            emoji = "😫"
+        else:
+            emoji = "🤔"
+
         word_info = db.execute(
             "SELECT * FROM words WHERE id = ?",
             (word_id,)
         ).fetchone()
-        return render_template("quiz/answer.html", level=level, word_info=dict(word_info), question_type=question_type)
+        return render_template("quiz/answer.html", level=level, word_info=dict(word_info), question_type=question_type, recent_performance=emoji)
 
+    # Pose a Question to User
     question_col = "meaning" if question_type == "meaning" else answer_type
     if g.user:
         words = db.execute(
