@@ -38,7 +38,7 @@ def index(question_type, level=None):
         if "word" not in session or not session["word"]:
             return redirect(url_for("quiz.index", level=level, question_type=question_type))
 
-        answer = request.form["answer"]
+        answer = request.form["answer"].strip()
         word_id = session["word"]["id"]
         question_time = session["word"]["question_time"]
         is_correct = answer == session["word"]["answer"]
