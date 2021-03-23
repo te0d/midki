@@ -11,6 +11,10 @@ body {
     border-bottom: 1px solid lightgray;
 }
 
+.dictionary-word {
+    font-size: 2rem;
+}
+
 .quiz-word {
-    font-size: 3em;
+    font-size: 3rem;
 }

@@ -25,41 +25,31 @@
 {% block content %}
     <p>{{words|length}} words</p>
 
-    <table class="table table-hover">
-        <thead>
-            {% if session["answer_type"] == "traditional" %}
-            <th scope="col">Traditional</th>
-            <th scope="col">Simplified</th>
-            {% else %}
-            <th scope="col">Simplified</th>
-            <th scope="col">Traditional</th>
-            {% endif %}
+    {% for word in words %}
+    <div class="row border rounded mb-2">
+        <div class="col-5">
+            <h5 class="dictionary-word">
+                {{ word["traditional"] if session["answer_type"] == "traditional" else word["simplified"] }}
+            </h5>
+            <h6 class="text-muted">
+                {{ word["pinyin_accent"] }}
+                |
+                <span class="text-nowrap">{{ word["simplified"] if session["answer_type"] == "traditional" else word["traditional"] }}</span>
+            </h6>
+        </div>
 
-            <th scope="col">Pinyin</th>
-            <th scope="col">Meaning</th>
-            {% if g.user %}
-            <th scope="col">+</th>
-            <th scope="col">-</th>
-            {% endif %}
-        </thead>
-        {% for word in words %}
-        <tr>
-            {% if session["answer_type"] == "traditional" %}
-            <td>{{ word["traditional"] }}</td>
-            <td>{{ word["simplified"] }}</td>
-            {% else %}
-            <td>{{ word["simplified"] }}</td>
-            <td>{{ word["traditional"] }}</td>
-            {% endif %}
+        <div class="col-6">
+            <p class="p-2">{{ word["meaning"] }}</p>
+        </div>
 
-            <td>{{ word["pinyin_accent"] }}</td>
-            <td>{{ word["meaning"] }}</td>
-
-            {% if g.user %}
-            <td>{{ word["win"] }}</td>
-            <td>{{ word["loss"] }}</td>
-            {% endif %}
-        </tr>
-        {% endfor %}
-    </table>
+        {% if g.user %}
+        <div class="col-1">
+            <div class="d-flex flex-column float-end">
+                <span class="badge rounded-pill m-2 bg-success">{{ word["win"] }}<span class="visually-hidden"> Correct</span></span>
+                <span class="badge rounded-pill m-2 bg-warning">{{ word["loss"] }}<span class="visually-hidden"> Wrong</span></span>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
 {% endblock content %}
