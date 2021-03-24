@@ -56,12 +56,20 @@ def hsk(level, question_type=None):
 
 
 @bp.route("/simplified")
-def simplified():
+@bp.route("/simplified/<path:subpath>")
+def simplified(subpath=None):
     session["answer_type"] = "simplified"
-    return redirect(url_for("index"))
+    if subpath:
+        return redirect("/{}".format(subpath))
+    else:
+        return redirect(url_for("index"))
 
 
 @bp.route("/traditional")
-def traditional():
+@bp.route("/traditional/<path:subpath>")
+def traditional(subpath=None):
     session["answer_type"] = "traditional"
-    return redirect(url_for("index"))
+    if subpath:
+        return redirect("/{}".format(subpath))
+    else:
+        return redirect(url_for("index"))

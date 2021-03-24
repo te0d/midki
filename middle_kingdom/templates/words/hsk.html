@@ -1,25 +1,42 @@
 {% extends "base.html" %}
 
+{% block subnav %}
+    <nav id="subnav" class="nav nav-pills justify-content-center bg-light pb-1 shadow-sm">
+        <a
+            class="nav-link {{ 'bg-danger active disabled' if session['answer_type'] != 'traditional' else 'text-danger' }}"
+            href="{{ url_for('words.simplified', subpath=request.path[1:]) }}">
+            Simplified
+        </a>
+        <a
+            class="nav-link {{ 'bg-danger active disabled' if session['answer_type'] == 'traditional' else 'text-danger' }}"
+            href="{{ url_for('words.traditional', subpath=request.path[1:]) }}">
+            Traditional
+        </a>
+
+        <a class="nav-link bg-success active disabled ms-2 ms-sm-6" href="#">List</a>
+        <a class="nav-link text-success" href="{{ url_for('quiz.index', question_type=question_type, level=level) }}">Quiz</a>
+
+        {% if g.user %}
+        <a
+            class="nav-link ms-2 ms-sm-6{{ ' active disabled' if question_type != 'meaning' }}"
+            href="{{ url_for('words.hsk', question_type='word', level=level) }}">
+            Word
+        </a>
+        <a
+            class="nav-link{{ ' active disabled' if question_type == 'meaning' }}"
+            href="{{ url_for('words.hsk', question_type='meaning', level=level) }}">
+            Meaning
+        </a>
+        {% endif %}
+    </nav>
+{% endblock %}
+
 {% block header %}
     <h1>
         {% block title %}
         HSK {{ level }}
-        {% if question_type %}
-        [{{ question_type }}]
-        {% endif %}
         {% endblock %}
     </h1>
-
-    <nav class="nav">
-        {% if question_type == 'word' %}
-        <a class="nav-link" href="{{ url_for('words.hsk', question_type='meaning', level=level) }}">List Meaning Stats</a>
-        {% elif question_type == 'meaning' %}
-        <a class="nav-link" href="{{ url_for('words.hsk', question_type='word', level=level) }}">List Word Stats</a>
-        {% endif %}
-
-        <a class="nav-link" href="{{ url_for('quiz.index', question_type='word', level=level) }}">Quiz Words</a>
-        <a class="nav-link" href="{{ url_for('quiz.index', question_type='meaning', level=level) }}">Quiz Meanings</a>
-    </nav>
 {% endblock header %}
 
 {% block content %}

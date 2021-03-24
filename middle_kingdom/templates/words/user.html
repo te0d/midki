@@ -1,5 +1,20 @@
 {% extends "base.html" %}
 
+{% block subnav %}
+    <nav id="subnav" class="nav nav-pills justify-content-center bg-light pb-1 shadow-sm">
+        <a
+            class="nav-link {{ 'bg-danger active disabled' if session['answer_type'] != 'traditional' else 'text-danger' }}"
+            href="{{ url_for('words.simplified') }}">
+            Simplified
+        </a>
+        <a
+            class="nav-link {{ 'bg-danger active disabled' if session['answer_type'] == 'traditional' else 'text-danger' }}"
+            href="{{ url_for('words.traditional') }}">
+            Traditional
+        </a>
+    </nav>
+{% endblock %}
+
 {% block header %}
     <h1>{% block title %}The Words{% endblock %}</h1>
 {% endblock header %}

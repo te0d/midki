@@ -1,22 +1,46 @@
 {% extends "base.html" %}
 
+{% block subnav %}
+    <nav id="subnav" class="nav nav-pills justify-content-center bg-light pb-1 shadow-sm">
+        <a
+            class="nav-link {{ 'bg-danger active disabled' if session['answer_type'] != 'traditional' else 'text-danger' }}"
+            href="{{ url_for('words.simplified', subpath=request.path[1:]) }}">
+            Simplified
+        </a>
+        <a
+            class="nav-link{{ ' bg-danger active disabled' if session['answer_type'] == 'traditional' else ' text-danger' }}"
+            href="{{ url_for('words.traditional', subpath=request.path[1:]) }}">
+            Traditional
+        </a>
+
+        {% if level %}
+        <a class="nav-link text-success ms-2 ms-sm-6" href="{{ url_for('words.hsk', question_type=question_type, level=level) }}">List</a>
+        <a class="nav-link bg-success active disabled" href="#">Quiz</a>
+        {% endif %}
+
+        <a
+            class="nav-link ms-2 ms-sm-6{{ ' active disabled' if question_type != 'meaning' }}"
+            href="{{ url_for('quiz.index', question_type='word', level=level) }}">
+            Word
+        </a>
+        <a
+            class="nav-link{{ ' active disabled' if question_type == 'meaning' }}"
+            href="{{ url_for('quiz.index', question_type='meaning', level=level) }}">
+            Meaning
+        </a>
+    </nav>
+{% endblock %}
+
 {% block header %}
     <h1>
         {% block title %}
         Quiz
-        [{{ question_type }}]
         {% endblock %}
-    </h1>
-
-    {% if level %}
-    <nav class="nav">
-        {% if g.user %}
-        <a class="nav-link" href="{{ url_for('words.hsk', level=level, question_type=question_type) }}">List Words</a>
-        {% else %}
-        <a class="nav-link" href="{{ url_for('words.hsk', level=level) }}">List Words</a>
+        
+        {% if level %}
+        [HSK {{ level }}]
         {% endif %}
-    </nav>
-    {% endif %}
+    </h1>
 {% endblock header %}
 
 {% block content %}

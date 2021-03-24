@@ -13,6 +13,11 @@ body {
     font-family: 'Noto Sans SC', sans-serif;
 }
 
+#subnav .nav-link {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
+}
+
 .content > header {
     border-bottom: 1px solid lightgray;
 }
