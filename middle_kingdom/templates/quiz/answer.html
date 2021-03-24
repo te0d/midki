@@ -17,7 +17,7 @@
 
 {% block content %}
 <div class="row mb-3">
-    <div class="col-sm-4 mb-3">
+    <div class="col-sm-4 col-md-12 col-xl-4 mb-3">
         <div class="p-3 border rounded-pill text-center">
             <h1 class="quiz-word">
                 {% if session["answer_type"] == "traditional" %}
@@ -30,7 +30,7 @@
             <p class="text-muted">{{ word_info["pinyin_accent"] }}</p>
         </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-6 col-md-12 col-xl-6">
         <p class="p-2 border-start rounded bg-light">{{ word_info["meaning"] }}</p>
 
         <table class="table">
@@ -51,9 +51,9 @@
     </div>
 
     {% if recent_performance %}
-    <div class="col-sm-2 text-center">
-        <p class="d-inline d-sm-block">recently</p>
-        <h1 class="d-inline d-sm-block">{{ recent_performance }}</h1>
+    <div class="col-sm-2 col-md-12 col-xl-2 text-center mb-3">
+        <p class="d-inline d-sm-block d-md-inline d-xl-block">recently</p>
+        <h1 class="d-inline d-sm-block d-md-inline d-xl-block">{{ recent_performance }}</h1>
     </div>
     {% endif %}
 </div>

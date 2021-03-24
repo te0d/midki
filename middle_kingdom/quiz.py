@@ -83,11 +83,11 @@ def index(question_type, level=None):
             emoji = None
         elif word_weight <= 50:
             emoji = "😁"
-        elif word_weight <= 80:
+        elif word_weight <= 70:
             emoji = "😃"
         elif word_weight >= 150:
             emoji = "😩"
-        elif word_weight > 120:
+        elif word_weight >= 130:
             emoji = "😫"
         else:
             emoji = "🤔"

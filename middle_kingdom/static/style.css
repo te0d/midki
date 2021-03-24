@@ -3,7 +3,7 @@
     src: local('Noto Sans SC'), url('/static/fonts/NotoSansSC-Regular.otf') format('opentype');
 }
 
-@media (min-width: 576px) { 
+@media (min-width: 768px) { 
     html {
         font-size: 1.5em;
     }

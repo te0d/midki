@@ -43,7 +43,7 @@ def hsk(level, question_type=None):
 
     if g.user:
         words = db.execute(
-            "SELECT seenwords.word_id, seenwords.simplified, seenwords.traditional, seenwords.pinyin_accent, seenwords.meaning, SUM(CASE WHEN results.is_correct = 1 THEN 1 ELSE 0 END) as win, SUM(CASE WHEN results.is_correct = 0 THEN 1 ELSE 0 END) as loss FROM (SELECT seen.id as seen_id, seen.word_id, seen.question_type, words.simplified, words.traditional, words.pinyin_accent, words.meaning FROM seen JOIN words ON seen.word_id = words.id WHERE seen.user_id = ? AND seen.question_type = ? AND seen.answer_type = ? AND words.hsk_level = ?) as seenwords LEFT JOIN results ON seenwords.seen_id = results.seen_id GROUP BY seenwords.word_id;",
+            "SELECT sw.word_id, sw.simplified, sw.traditional, sw.pinyin_accent, sw.meaning, (CASE WHEN sw.weight <= 70 THEN 'alert-success' WHEN sw.weight >= 130 THEN 'alert-warning' ELSE '' END) AS weight_class, SUM(CASE WHEN r.is_correct = 1 THEN 1 ELSE 0 END) AS win, SUM(CASE WHEN r.is_correct = 0 THEN 1 ELSE 0 END) AS loss FROM (SELECT s.id AS seen_id, s.word_id, s.question_type, s.weight, w.simplified, w.traditional, w.pinyin_accent, w.meaning FROM seen s JOIN words w ON s.word_id = w.id WHERE s.user_id = ? AND s.question_type = ? AND s.answer_type = ? AND w.hsk_level = ?) AS sw LEFT JOIN results r ON sw.seen_id = r.seen_id GROUP BY sw.word_id;",
             (g.user["id"], question_type, answer_type, level)
         ).fetchall()
     else:
