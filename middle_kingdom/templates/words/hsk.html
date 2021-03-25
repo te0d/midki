@@ -13,12 +13,12 @@
             Traditional
         </a>
 
-        <a class="nav-link bg-success active disabled ms-2 ms-sm-6" href="#">List</a>
+        <a class="nav-link bg-success active disabled ms-1 ms-sm-6" href="#">List</a>
         <a class="nav-link text-success" href="{{ url_for('quiz.index', question_type=question_type, level=level) }}">Quiz</a>
 
         {% if g.user %}
         <a
-            class="nav-link ms-2 ms-sm-6{{ ' active disabled' if question_type != 'meaning' }}"
+            class="nav-link ms-1 ms-sm-6{{ ' active disabled' if question_type != 'meaning' }}"
             href="{{ url_for('words.hsk', question_type='word', level=level) }}">
             Word
         </a>

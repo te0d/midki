@@ -9,23 +9,18 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     </head>
     <body>
-        <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <nav class="navbar navbar-expand navbar-light bg-light">
             <div class="container-md">
                 <a class="navbar-brand" href="{{ url_for('index') }}">Midki</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <div class="navbar-nav w-100">
-                        {% if g.user %}
-                            <span class="navbar-text ms-auto">[ <em>{{ g.user["username"] }}</em> ]</span>
-                            <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
-                        {% else %}
-                            <a class="nav-link ms-auto" href="{{ url_for('auth.register') }}">Register</a>
-                            <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
-                        {% endif %}
-                    </div>
+                <div class="navbar-nav">
+                    {% if g.user %}
+                    <span class="navbar-text ms-auto">[ <em>{{ g.user["username"] }}</em> ]</span>
+                    <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+                    {% else %}
+                    <a class="nav-link ms-auto" href="{{ url_for('auth.register') }}">Register</a>
+                    <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+                    {% endif %}
                 </div>
             </div>
         </nav>
@@ -47,8 +42,6 @@
             {% endfor %}
             {% block content %}{% endblock %}
         </section>
-
-        <script src="{{ url_for('static', filename='bootstrap-5.0.0-b2.min.js') }}"></script>
     </body>
 </html>
 

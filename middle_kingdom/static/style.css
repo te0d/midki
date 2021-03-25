@@ -2,19 +2,12 @@
     font-family: 'Noto Sans SC';
     src: local('Noto Sans SC'), url('/static/fonts/NotoSansSC-Regular.otf') format('opentype');
 }
-
-@media (min-width: 768px) { 
-    html {
-        font-size: 1.5em;
-    }
-}
-
 body {
     font-family: 'Noto Sans SC', sans-serif;
 }
 
 #subnav .nav-link {
-    padding: 0.3rem 0.8rem;
+    padding: 0.3rem 0.5rem;
     font-size: 0.8rem;
 }
 
@@ -29,3 +22,16 @@ body {
 .quiz-word {
     font-size: 3rem;
 }
+
+@media (min-width: 576px) { 
+    #subnav .nav-link {
+        padding: 0.3rem 0.8rem;
+    }
+}
+
+@media (min-width: 768px) { 
+    html {
+        font-size: 1.5em;
+    }
+}
+

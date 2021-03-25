@@ -10,7 +10,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from middle_kingdom.db import get_db
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
-username_re = re.compile(r"^[\w\d]{3,32}$")
+username_re = re.compile(r"^[\w\d]{3,16}$")
 
 @bp.route("/register", methods=("GET", "POST"))
 def register():
@@ -26,7 +26,7 @@ def register():
         elif not password:
             error = "Password is required"
         elif not username_re.match(username):
-            error = "Username must be between 3 and 32 characters and cannot contain spaces or punctuation."
+            error = "Username must be between 3 and 16 characters and cannot contain spaces or punctuation."
         elif len(password) < 8 or len(password) > 32:
             error = "Password must be between 8 and 32 characters."
         elif email and len(email) > 64:
