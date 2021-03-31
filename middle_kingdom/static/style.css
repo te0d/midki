@@ -1,11 +1,3 @@
-@font-face {
-    font-family: 'Noto Sans SC';
-    src: local('Noto Sans SC'), url('/static/fonts/NotoSansSC-Regular.otf') format('opentype');
-}
-body {
-    font-family: 'Noto Sans SC', sans-serif;
-}
-
 #subnav .nav-link {
     padding: 0.3rem 0.5rem;
     font-size: 0.8rem;
