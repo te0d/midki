@@ -1,10 +1,14 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+}
+
 #subnav .nav-link {
     padding: 0.3rem 0.5rem;
     font-size: 0.8rem;
-}
-
-.content > header {
-    border-bottom: 1px solid lightgray;
 }
 
 .dictionary-word {

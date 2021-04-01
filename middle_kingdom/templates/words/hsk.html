@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block title %}Browse HSK {{ level }} - {% endblock %}
+{% block description %}Browse HSK level {{ level }} words and their meanings.{% endblock %}
+
+
 {% block subnav %}
     <nav id="subnav" class="nav nav-pills justify-content-center bg-light pb-1 shadow-sm">
         <a
@@ -32,11 +36,7 @@
 {% endblock %}
 
 {% block header %}
-    <h1>
-        {% block title %}
-        HSK {{ level }}
-        {% endblock %}
-    </h1>
+    <h1>HSK {{ level }}</h1>
 {% endblock header %}
 
 {% block content %}

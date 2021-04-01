@@ -1,5 +1,24 @@
 {% extends "base.html" %}
 
+{% block meta %}
+<meta name="robots" content="noindex">
+{% endblock %}
+
+{% block title %}
+    Quiz
+
+    {% if level %}
+    HSK {{ level }}
+    {% endif %}
+
+    {{ 'Meanings' if question_type == 'meaning' else 'Words' }}
+
+    -
+{% endblock %}
+
+{% block description %}Quiz your {{ 'HSK {}'.format(level) if level }} {{ 'meanings' if question_type == 'meaning' else 'words' }} knowledge of simplified or traditional Chinese characters.{% endblock %}
+
+
 {% block subnav %}
     <nav id="subnav" class="nav nav-pills justify-content-center bg-light pb-1 shadow-sm">
         <a
@@ -33,9 +52,7 @@
 
 {% block header %}
 <h1>
-    {% block title %}
     Quiz
-    {% endblock %}
     
     {% if level %}
     [HSK {{ level }}]
@@ -89,4 +106,5 @@
 <form action="{{ url_for("quiz.index", question_type=question_type, level=level) }}" method="get">
     <input type="submit" value="Next Word" class="btn btn-primary mb-3" autofocus="true">
 </form>
+
 {% endblock content %}

@@ -1,5 +1,22 @@
 {% extends "base.html" %}
 
+{% block title %}
+    Quiz
+
+    {% if level %}
+    HSK {{ level }}
+    {% else %}
+    All
+    {% endif %}
+
+    {{ 'Meanings' if question_type == 'meaning' else 'Words' }}
+
+    -
+{% endblock %}
+
+{% block description %}Quiz your {{ 'HSK {}'.format(level) if level }} {{ 'meanings' if question_type == 'meaning' else 'words' }} knowledge of simplified or traditional Chinese characters.{% endblock %}
+
+
 {% block subnav %}
     <nav id="subnav" class="nav nav-pills justify-content-center bg-light pb-1 shadow-sm">
         <a
@@ -8,7 +25,7 @@
             Simplified
         </a>
         <a
-            class="nav-link{{ ' bg-danger active disabled' if session['answer_type'] == 'traditional' else ' text-danger' }}"
+            class="nav-link {{ 'bg-danger active disabled' if session['answer_type'] == 'traditional' else 'text-danger' }}"
             href="{{ url_for('words.traditional', subpath=request.path[1:]) }}">
             Traditional
         </a>
@@ -33,9 +50,7 @@
 
 {% block header %}
     <h1>
-        {% block title %}
         Quiz
-        {% endblock %}
         
         {% if level %}
         [HSK {{ level }}]

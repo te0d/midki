@@ -1,9 +1,13 @@
 <!doctype html>
 <html>
     <head>
-        <title>{% block title %}{% endblock %} - Midki</title>
+        <title>{% block title %}{% endblock %}Midki</title>
 
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="{% block description %}Welcome to Midki! Practice typing simplified and traditional Chinese words based on your HSK level.{% endblock %}">
+        {% block meta %}{% endblock %}
 
         <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='midki_logo_180.png') }}">
         <link rel="icon" type="img/png" sizes="32x32" href="{{ url_for('static', filename='midki_logo_32.png') }}">
@@ -12,7 +16,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-5.0.0-b2.min.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     </head>
-    <body>
+    <body class="d-flex flex-column">
         <nav class="navbar navbar-expand navbar-light bg-light">
             <div class="container-md">
                 <a class="navbar-brand" href="{{ url_for('index') }}">Midki</a>
@@ -46,6 +50,12 @@
             {% endfor %}
             {% block content %}{% endblock %}
         </section>
+
+        <footer class="footer mt-auto py-3 bg-light border-top">
+            <div class="container-md">
+                <p class="text-center">Thanks for stopping by!</p>
+            </div>
+        </footer>
     </body>
 </html>
 
