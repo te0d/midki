@@ -6,6 +6,14 @@ body {
     height: 100%;
 }
 
+#welcome {
+    font-size: 0.8rem;
+}
+
+#welcome p {
+    margin-bottom: 0;
+}
+
 #subnav .nav-link {
     padding: 0.3rem 0.5rem;
     font-size: 0.8rem;
@@ -17,6 +25,11 @@ body {
 
 .quiz-word {
     font-size: 3rem;
+}
+
+#designed-by {
+    font-size: 0.8rem;
+    margin-bottom: 0;
 }
 
 @media (min-width: 576px) { 

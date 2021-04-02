@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Help! - {% endblock %}
+
+{% block description %}How do I use Midki to improve my ability to read and write simplified or traditional Chinese? Gain guidance with Help!{% endblock %}
+
+
+{% block subnav %}
+    <nav id="subnav" class="nav nav-pills justify-content-center bg-light pb-1 shadow-sm">
+        <a
+            class="nav-link text-danger"
+            href="{{ url_for('words.about') }}">
+            About
+        </a>
+        <a
+            class="nav-link bg-danger active disabled"
+            href="#">
+            Help
+        </a>
+    </nav>
+{% endblock %}
+
+{% block header %}
+    <h1>Help!</h1>
+{% endblock header %}
+
+{% block content %}
+
+<h3 class="mt-5">I'm new. What is this?</h3>
+
+<p>Midki is a spaced-repetition typing quiz for learning to read and type Chinese, simplified or traditional. Instead of choosing an answer from a list of choices, you type the answer. You are presented with either a word (to learn typing it in the first place) or the meaning (to retrieve a word and type it without reference). If you create an account, only the most common words are quizzed until more new words are added after getting previous new words correct for the first time. All of this is separated by simplified/traditional, word/meaning, and by HSK level.</p>
+
+<h3 class="mt-5">What is HSK level?</h3>
+
+<p>There are various ways of measuring how well someone knows a language. <strong>HSK</strong> or <strong><em>Hanyu Shuiping Kaoshi</em></strong> is one way to measure one's knowledge of Standard Chinese (a dialect of Mandarin). Midki is centered around the 6 HSK levels. HSK 1 covers 150 words, the most basic and frequent words, while the most advanced level HSK 6 contains 2500 new words. There are 5000 words overall. An individual who can read and understand the grammatical context of the words in level HSK 1 up to HSK 6 should be able to communicate in Chinese fairly well. A standardized exam is available to certify your knowledge. Check out the <a href="https://en.wikipedia.org/wiki/Hanyu_Shuiping_Kaoshi">Hanyu Shuiping Kaoshi</a> Wikipedia page for more information.</p>
+
+<p>Another common was to measure someone's knowledge of a language is the <strong>CEFR</strong> or <strong><em>Common European Framework of Reference for Languages</em></strong>. This system is not limited to Chinese and can be applied to describe a learner's level of ability in other languages. There are also 6 levels of the CEFR, but they are A1, A2, B1, B2, C1, and C2.</p>
+
+<h3 class="mt-5">How about grammar? Are these word meanings any good?</h3>
+
+<p>Midki currently does not deal with grammar. Memorizing the meanings of words on Midki will not provide true understanding of the words. For a free textual resource, I recommend checking out the <a href="https://resources.allsetlearning.com/chinese/grammar/Contact">Chinese Grammar Wiki</a> by <em>AllSet Learning</em>. Ulitimately, practicing with someone who knows the language and has knowledge of what does or doesn't sound awkward is the way to go.</p>
+
+<h3 class="mt-5">Ok, so how do I type Chinese characters?</h3>
+
+<p>Depending on what Operating System your device uses, for example Microsoft Windows or Android, how you add a keyboard varies. Here are some links for common devices:</p>
+<ul>
+    <li><a href="https://support.microsoft.com/en-us/windows/manage-the-input-and-display-language-settings-in-windows-10-12a10cb4-8626-9b77-0ccb-5013e0c7c7a2">Add a Keyboard in Microsoft Windows 10</a></li>
+    <li><a href="https://support.apple.com/guide/iphone/add-or-change-keyboards-iph73b71eb/ios">Add or Change Keyboards on iPhone</a></li>
+    <li><a href="https://support.google.com/gboard/answer/7068494?co=GENIE.Platform%3DAndroid&hl=en">Type in a Different Language using Gboard on Android</a></li>
+</ul>
+
+<p>Note, there are <a href="https://en.wikipedia.org/wiki/Chinese_input_methods_for_computers">Various Ways to Type Chinese Characters</a> on a device. Your device probably won't have all of them. I believe the most popular input method is <a href="https://en.wikipedia.org/wiki/Pinyin_input_method">the Pinyin method</a> which uses the sound of the word to determine how to type it. Personally, I am interested in the composition of the characters, so I have been learing using <a href="https://en.wikipedia.org/wiki/Wubi_method">the Wubi method</a> which focuses character shape to determine how to type it (primarily simplified characters). If you are learning traditional characters, I often hear of people who use <a href="https://en.wikipedia.org/wiki/Bopomofo">the Zhuyin also known as Bopomofo method</a>. This method still bases the input method on sound, but instead of latin letters, there are unique characters to support the sounds used in Chinese.</p>
+
+<h3 class="mt-5">What do the colors and emojis mean when I am logged in?</h3>
+
+<p>Statistics of your recent performance is kept track of when you are logged in. The words in your word list may be highlighted green if you've gotten most recent attempts correct or yellow if recent attempts have failed. Likewise, the emoji displayed when you answer a quiz question is based on your recent performance. As you answer a word correctly, the emoji grows happier.</p>
+
+<h3 class="mt-5">So uh, I lost my password or want to do something else account related...</h3>
+
+<p>The user authentication system is very basic at the moment. Common requests such as recovering a lost password or changing a password are manual and require contacting me directly. While an email address is not required upon signing up, it will be used to determing the rightful owner of the account in the case of a dispute.</p>
+
+{% endblock content %}
+
+{% block footer %}
+<div class="container-md">
+    <p class="text-center">Thanks for stopping by!</p>
+</div>
+{% endblock %}

@@ -36,7 +36,7 @@
         {% block subnav %}{% endblock %}
 
         <section class="container-md content">
-            <header class="mt-3 mb-3 pb-2 text-center">
+            <header class="mt-3 mb-1 text-center">
                 {% block header %}{% endblock %}
             </header>
             {% for category, message in get_flashed_messages(with_categories=true) %}
@@ -51,9 +51,16 @@
             {% block content %}{% endblock %}
         </section>
 
-        <footer class="footer mt-auto py-3 bg-light border-top">
+        <footer class="footer mt-auto pb-3 bg-light border-top">
             <div class="container-md">
-                <p class="text-center">Thanks for stopping by!</p>
+                {% block footer %}
+                <ul class="nav justify-content-center">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('words.help') }}">Help!</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('words.about') }}">About</a></li>
+                </ul>
+                {% endblock %}
+
+                <p id="designed-by" class="text-muted text-center">Designed by <a href="https://www.todonnell.us">Tom O'Donnell</a></p>
             </div>
         </footer>
     </body>

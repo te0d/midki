@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}About - {% endblock %}
+
+{% block description %}What is Midki? Midki is a basic spaced-repetition typing quiz for learing to read and write Chinese, simplified or traditional.{% endblock %}
+
+
+{% block subnav %}
+    <nav id="subnav" class="nav nav-pills justify-content-center bg-light pb-1 shadow-sm">
+        <a
+            class="nav-link bg-danger active disabled"
+            href="#">
+            About
+        </a>
+        <a
+            class="nav-link text-danger"
+            href="{{ url_for('words.help') }}">
+            Help
+        </a>
+    </nav>
+{% endblock %}
+
+{% block header %}
+    <h1>About Midki</h1>
+{% endblock header %}
+
+{% block content %}
+<p>Hello! Chinese writing, with its long history and widespread usage, has been something that intrigues me. As such, I seek to learn more about Chinese characters and grammar. Focusing on reading and writing, I was frustrated by my inability to write characters with pen and paper in a reasonable amount of time. So instead, I started to focus on writing characters via a computer.</p>
+
+<p>Since I was focusing on reading and writing, to learn the characters themselves, the Wubi input method caught my interest. The Wubi input method allows the typist to type a sequence of keys which correspond to components of a simplified Chinese character. For instance, the sequence for the character "好" is "<strong>vb</strong>" where "<strong>v</strong>" denotes the "女" component and "<strong>b</strong>" denotes the "子" component. By learning which keys correspond to which components, you have a reasonable sense of how to type simplified Chinese characters by their appearance.</p>
+
+<p>To practice typing using Wubi, I developed a Word Quiz where I respond with the word shown to me. I adjust the rate of appearance of words based on how often I am correct. To allow more time for difficult words, I add new words when an old new word is answered correctly for the first time. Words appear based on how frequently they appear in my sources' selection of texts. They are organized by HSK level in an effort to allow more advanced individuals to quiz at their level.</p>
+
+<p>After I improved my ability to type simplified Chinese characters based on their appearance, I added a meaning quiz. While you can't capture more than a suggestion of a word's meaning in a short description, it gives a general idea of the word.</p>
+
+<p>I am but a low-level Chinese learner, an odd-ball one at that. While I think Midki can help people train certain aspects of learning the Chinese language, there is much more to help you on your journey. Try to find a language partner or teacher!</p>
+{% endblock content %}
+
+{% block footer %}
+<div class="container-md">
+    <p class="text-center">Thanks for stopping by!</p>
+</div>
+{% endblock %}

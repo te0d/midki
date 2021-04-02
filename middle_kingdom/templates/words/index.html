@@ -23,6 +23,25 @@
 {% endblock header %}
 
 {% block content %}
+<div id="welcome" class="text-center">
+    <p>
+        Welcome to Midki!
+        <strong>Learn to read and type Chinese characters.</strong>
+    </p>
+    <p>
+        Choose <strong class="text-danger">Simplified</strong> or <strong class="text-danger">Traditional</strong> characters above.
+        Then choose the <strong>HSK level</strong> and <strong class="text-success">Quiz Type</strong> below to start the quiz!
+    </p>
+    <p>
+        Confused?
+        Check out the <a href="{{ url_for('words.help') }}">Help!</a>
+    </p>
+    <p>
+        Want to keep track of your progress?
+        <a href="{{ url_for('auth.register') }}">Create an account!</a>
+    </p>
+</div>
+
 <div class="row text-center">
     <div class="col-12">
         <div class="list-group list-group-horizontal m-3">
