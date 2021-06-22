@@ -26,7 +26,7 @@ pip install -e .
 A sqlite3 database is used to store word and user information. It is initialized by:
 
 ```
-FLASK="middle_kingdom" flask init-db
+FLASK_APP="middle_kingdom" flask init-db
 ```
 
 For production, see https://flask.palletsprojects.com/en/2.0.x/quickstart/#sessions to set up a secret key to sign the cookie.
@@ -36,7 +36,7 @@ For production, see https://flask.palletsprojects.com/en/2.0.x/quickstart/#sessi
 To start the server:
 
 ```
-FLASK="middle_kingdom" flask run
+FLASK_APP="middle_kingdom" flask run
 ```
 
 ## Contributing
